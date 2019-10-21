@@ -15,5 +15,12 @@ db <- read_csv(here::here("data", "disease_burden.csv")) %>%
 # Create a subset and graph
 
 db_sub <- db %>% 
-  filter(country_name %in% c("Afghanistan", "Somalia", "United States", "Japan"))
-         
+  filter(country_name %in% c("Afghanistan", "Somalia", "United States", "Japan")) %>%
+  filter(age_group == "0-6 days", sex == "Both")
+
+# Create a basic line graph
+
+ggplot(db_sub, aes (x = year, y = deaths_per_100k))+
+  geom_line(aes(color = country_name))
+
+ggsave(here("final graphs", "disease_graph.png"))
